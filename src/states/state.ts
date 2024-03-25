@@ -2,21 +2,21 @@ import { atom, selector, selectorFamily } from 'recoil';
 import localStorageManager from '../utils';
 import getRepos from '../services';
 import { RepositorytListType, RepositoryType } from '../types';
-import { STARRED_REPOSITORIES } from '../constants';
+import STARRED_REPOSITORIES from '../constants';
 
 const localRepositoryList = localStorageManager.getObject(STARRED_REPOSITORIES);
 
 const repositoriesDataMapper = {
   get: (data: Omit<RepositoryType[], 'isStarred'>): Required<RepositorytListType> => data.map((item: any) => {
     const {
-      name, description, stargazers_count, url, id, language,
+      name, description, stargazers_count, html_url, id, language,
     } = item;
     const isRepoStarred = localRepositoryList?.find((el: any) => id === el.id);
     return {
       name,
       description,
       stargazers_count,
-      url,
+      url: html_url,
       isStarred: Boolean(isRepoStarred),
       id,
       language,
@@ -36,7 +36,7 @@ const repositoriesStarredListState = atom<RepositorytListType | null>({
 
 const repositoriesListQuery = selectorFamily({
   key: 'repositoriesListQuery',
-  get: (lang) => async () => {
+  get: (lang: string | undefined) => async () => {
     const response = await getRepos(lang);
     if (response.error) {
       throw response.error;

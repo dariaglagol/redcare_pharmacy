@@ -1,7 +1,5 @@
 .repo-list {
-    list-style: none;
     margin: 20px 0 0 0;
-    padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-auto-rows: auto;
@@ -9,51 +7,23 @@
 }
 
 .repo-item {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 10px;
-    box-shadow: 0 -1px 3px 1px rgba(0,0,0, 0.1), 0 1px 3px 1px rgba(0,0,0, 0.1);
 }
 
-.repo-item__header {
-    margin: 0 0 10px 0;
+.ant-btn-icon {
+    width: 20px;
+    height: 20px;
+    color: rgba(0, 0, 0, 0.45);
 }
 
-.repo-item__header { grid-area: 1 / 1 / 2 / 2; }
-.repo-item__star-count {
-    grid-area: 1 / 2 / 2 / 3;
-    text-align: right;
-}
-.repo-item__desc {
-    grid-area: 2 / 1 / 3 / 3;
-    word-break: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
-.repo-item__link { grid-area: 3 / 1 / 4 / 2; }
-
-.repo-item__star-btn {
-    grid-area: 3 / 2 / 4 / 3;
-    background: transparent;
-    justify-self: end;
-    border: none;
-    cursor: pointer;
-    color: black;
+.starred-button {
+    color: #eac54f;
 }
 
-.repo-item__star-btn:hover,
-.repo-item__star-btn:focus {
-    color: darkgoldenrod;
-}
-
-.repo-item__star-btn svg {
-    width: 30px;
-    height: 30px;
-}
-
-.repo-item__star-btn--active {
-    color: blueviolet;
+.language-select {
+    margin-left: auto;
+    width: 180px;
 }

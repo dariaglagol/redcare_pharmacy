@@ -1,6 +1,9 @@
-import './style.css';
+import { Card, Button } from 'antd';
 import StarIcon from './icons/star.svg?react';
 import { RepositoryType } from './types';
+import './style.css';
+
+const { Meta } = Card;
 
 type RepositoryUIItemType = {
   item: RepositoryType
@@ -16,20 +19,25 @@ const RepositoryItem = ({ item, onStarClick }: RepositoryUIItemType) => {
     onStarClick(repository);
   };
 
+  const actions = [
+    <Button type="link" href={url} target="_blank">Have a look</Button>,
+    <Button
+      type="text"
+      aria-label="Mark repo as favorite"
+      shape="circle"
+      icon={<StarIcon />}
+      onClick={() => handleStarClick(item)}
+      classNames={{ icon: `${isStarred ? 'starred-button' : ''}` }}
+    />,
+  ];
+
   return (
-    <li className="repo-item">
-      <h4 className="repo-item__header">{name}</h4>
-      <span className="repo-item__star-count">{stargazers_count}</span>
-      <p className="repo-item__desc">{description}</p>
-      <a href={url} target="_blank" className="repo-item__link">Visit repo</a>
-      <button
-        className={`repo-item__star-btn ${isStarred && 'repo-item__star-btn--active'}`}
-        aria-label="Mark repo as fav"
-        onClick={() => handleStarClick(item)}
-      >
-        <StarIcon />
-      </button>
-    </li>
+    <Card className="repo-item" title={name} actions={actions}>
+      <div>
+        <Meta description={<p>Stars count: {stargazers_count}</p>} />
+        <Meta description={description} />
+      </div>
+    </Card>
   );
 };
 

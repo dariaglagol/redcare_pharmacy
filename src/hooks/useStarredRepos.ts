@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { repositoriesListState, repositoriesStarredListState } from '../states/state.ts';
 import localStorageManager from '../utils';
 import { RepositoryType, RepositorytListType } from '../types';
-import { STARRED_REPOSITORIES } from '../constants';
+import STARRED_REPOSITORIES from '../constants';
 
 const useStarredList = () => {
   const setStarredList = useSetRecoilState(repositoriesStarredListState);
