@@ -5,53 +5,12 @@ import {
   replaceItemsInRepositoryList,
 } from '../index.ts';
 import { localStorageMock } from '../../__mocks__/utils.ts';
-import { repositoriesShrinkData } from '../../__mocks__/data.ts';
-
-const repositoriesListWithoutEntry = [
-  {
-    id: 78494737,
-    name: 'walle',
-    url: 'https://github.com/Meituan-Dianping/walle',
-    description: 'Android Signature V2 Scheme签名下的新一代渠道包打包神器',
-    stargazers_count: 6699,
-    isStarred: false,
-    language: 'Java',
-  },
-  {
-    id: 78566876,
-    name: 'prettier-vscode',
-    description: 'Visual Studio Code extension for Prettier',
-    url: 'https://github.com/prettier/prettier-vscode',
-    language: 'TypeScript',
-    stargazers_count: 5008,
-    isStarred: false,
-  },
-  {
-    id: 78492853,
-    name: 'wux-weapp',
-    url: 'https://github.com/wux-weapp/wux-weapp',
-    description: ':dog: 一套组件化、可复用、易扩展的微信小程序 UI 组件库',
-    isStarred: false,
-    language: 'JavaScript',
-    stargazers_count: 4961,
-  },
-];
-
-const itemWithNewId = {
-  id: 7849477,
-  name: 'walle',
-  url: 'https://github.com/Meituan-Dianping/walle',
-  description: 'Android Signature V2 Scheme签名下的新一代渠道包打包神器',
-  stargazers_count: 6699,
-  isStarred: false,
-  language: 'Java',
-};
-
-const localStorageDataMock = {
-  firstEntry: repositoriesShrinkData,
-  secondEntry: [{ key: 56, id: 454 }],
-  thirdEntry: [{ key: 12, id: 8765 }],
-};
+import {
+  repositoriesShrinkData,
+  itemWithNewId,
+  localStorageDataMock,
+  repositoriesShrinkDataWithoutEntry,
+} from '../../__mocks__/data.ts';
 
 beforeAll(() => {
   Object.defineProperty(window, 'localStorage', { value: localStorageMock });
@@ -90,7 +49,7 @@ describe('manageStarredRepoList test set', () => {
 
   test('remove item from starredList', () => {
     const a = manageStarredRepoList({ list: repositoriesShrinkData, prepItem: repositoriesShrinkData[0] });
-    expect(a).toEqual(repositoriesListWithoutEntry);
+    expect(a).toEqual(repositoriesShrinkDataWithoutEntry);
   });
 });
 
@@ -111,7 +70,7 @@ describe('replaceItemsInRepositoryList test set', () => {
       isStarred: true,
     };
     const a = replaceItemsInRepositoryList({ list: repositoriesShrinkData, prepItem: item });
-    expect(a).toEqual([item, ...repositoriesListWithoutEntry]);
+    expect(a).toEqual([item, ...repositoriesShrinkDataWithoutEntry]);
   });
 
   test('array is the same when there is new items', () => {

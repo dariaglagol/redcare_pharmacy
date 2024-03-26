@@ -47,6 +47,36 @@ const repositoriesShrinkData = [
   },
 ];
 
+const repositoriesShrinkDataWithoutEntry = [
+  {
+    id: 78494737,
+    name: 'walle',
+    url: 'https://github.com/Meituan-Dianping/walle',
+    description: 'Android Signature V2 Scheme签名下的新一代渠道包打包神器',
+    stargazers_count: 6699,
+    isStarred: false,
+    language: 'Java',
+  },
+  {
+    id: 78566876,
+    name: 'prettier-vscode',
+    description: 'Visual Studio Code extension for Prettier',
+    url: 'https://github.com/prettier/prettier-vscode',
+    language: 'TypeScript',
+    stargazers_count: 5008,
+    isStarred: false,
+  },
+  {
+    id: 78492853,
+    name: 'wux-weapp',
+    url: 'https://github.com/wux-weapp/wux-weapp',
+    description: ':dog: 一套组件化、可复用、易扩展的微信小程序 UI 组件库',
+    isStarred: false,
+    language: 'JavaScript',
+    stargazers_count: 4961,
+  },
+];
+
 const repositoriesListWide = [
   {
     id: 78483432,
@@ -619,10 +649,26 @@ const mockedUrls = {
   withLang: `https://api.github.com/search/repositories?q=created:2017-01-10+language:${mockedLanguage}&sort=stars&order=desc`,
 };
 
+const itemWithNewId = {
+  id: 7849477,
+  name: 'walle',
+  url: 'https://github.com/Meituan-Dianping/walle',
+  description: 'Android Signature V2 Scheme签名下的新一代渠道包打包神器',
+  stargazers_count: 6699,
+  isStarred: false,
+  language: 'Java',
+};
+
 enum FETCH_STATUS {
   resolve = 'resolve',
   reject = 'reject',
 }
+
+const localStorageDataMock = {
+  firstEntry: repositoriesShrinkData,
+  secondEntry: [{ key: 56, id: 454 }],
+  thirdEntry: [{ key: 12, id: 8765 }],
+};
 
 export {
   item,
@@ -631,4 +677,7 @@ export {
   mockedUrls,
   FETCH_STATUS,
   repositoriesShrinkData,
+  itemWithNewId,
+  localStorageDataMock,
+  repositoriesShrinkDataWithoutEntry,
 };

@@ -1,4 +1,5 @@
 import { RepositoryType, RepositoryListType } from '../types';
+import STARRED_REPOSITORIES from '../constants';
 
 const localStorageManager = {
   getObject(key: string): any | null {
@@ -33,8 +34,39 @@ const replaceItemsInRepositoryList = ({
   return [...acc, item];
 }, []);
 
+const localRepositoryList = localStorageManager.getObject(STARRED_REPOSITORIES);
+
+const repositoriesDataMapper = {
+  get: (data: Omit<RepositoryType[], 'isStarred'>): Required<RepositoryListType> => data.map((item: any) => {
+    const {
+      name, description, stargazers_count, html_url, id, language,
+    } = item;
+    const isRepoStarred = localRepositoryList?.find((el: RepositoryType) => id === el.id);
+    return {
+      name,
+      description,
+      stargazers_count,
+      url: html_url,
+      isStarred: Boolean(isRepoStarred),
+      id,
+      language,
+    };
+  }),
+};
+
+const languageDataMapper = {
+  get: (data: Omit<RepositoryType[], 'isStarred'>) => data.reduce((acc: Set<string>, { language }: Partial<RepositoryType>) => {
+    if (language) {
+      acc.add(language);
+    }
+    return acc;
+  }, new Set()),
+};
+
 export {
   localStorageManager,
   replaceItemsInRepositoryList,
   manageStarredRepoList,
+  repositoriesDataMapper,
+  languageDataMapper,
 };
