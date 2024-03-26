@@ -1,7 +1,7 @@
 import { Card, Button } from 'antd';
-import StarIcon from './icons/star.svg?react';
-import { RepositoryType } from './types';
-import './style.css';
+import StarIcon from '../icons/star.svg?react';
+import { RepositoryType } from '../types';
+import '../style.css';
 
 const { Meta } = Card;
 
@@ -12,7 +12,7 @@ type RepositoryUIItemType = {
 
 const RepositoryItem = ({ item, onStarClick }: RepositoryUIItemType) => {
   const {
-    name, description, stargazers_count, url, isStarred,
+    id, name, description, stargazers_count, url, isStarred,
   } = item;
 
   const handleStarClick = (repository: RepositoryType) => {
@@ -28,6 +28,7 @@ const RepositoryItem = ({ item, onStarClick }: RepositoryUIItemType) => {
       icon={<StarIcon />}
       onClick={() => handleStarClick(item)}
       classNames={{ icon: `${isStarred ? 'starred-button' : ''}` }}
+      data-testid={`star-btn_${id}`}
     />,
   ];
 

@@ -7,9 +7,15 @@ import React, { useEffect, useState } from 'react';
 import { Tabs, Select } from 'antd';
 import type { TabsProps } from 'antd';
 
-import RepositoryItem from './RepositoryItem.tsx';
-import { repositoriesListQuery, repositoriesListState, repositoriesStarredListState } from './states/state.ts';
-import { useStarredList, useLanguageSelect } from './hooks';
+import RepositoryItem from './components/RepositoryItem.tsx';
+import {
+  languageListQuery,
+  repositoriesListQuery,
+  repositoriesListState,
+  repositoriesStarredListState,
+} from './states/state.ts';
+import useStarredList from './hooks';
+import { RepositoryType } from './types';
 
 const App = () => {
   const [activeLang, setActiveLang] = useState<undefined | string>(undefined);
@@ -18,20 +24,20 @@ const App = () => {
   const getRepoList = useRecoilValue(repositoriesListQuery(activeLang));
   const setRepoList = useSetRecoilState(repositoriesListState);
   const repoList = useRecoilValue(repositoriesListState);
+  const langRepositoriesList = useRecoilValue(languageListQuery);
 
   const starredList = useRecoilValue(repositoriesStarredListState);
 
-  const { starItem } = useStarredList();
-  const { langList } = useLanguageSelect();
+  const { setStarToItem } = useStarredList();
 
   useEffect(() => {
     setRepoList(getRepoList);
   }, [getRepoList]);
 
   useEffect(() => {
-    const langListMapper = langList.map((item: string) => ({ value: item, label: item }));
-    setLangListPrepared(langListMapper);
-  }, [langList]);
+    const langListMapper = [...langRepositoriesList].map((item: string) => ({ value: item, label: item }));
+    setLangListPrepared([{ value: '', label: 'Choose language' }, ...langListMapper]);
+  }, [langRepositoriesList]);
 
   const handleLangSelect = (value: string) => {
     setActiveLang(value);
@@ -50,8 +56,8 @@ const App = () => {
           className="language-select"
         />
         <div className="repo-list">
-          {repoList?.map((item) => (
-            <RepositoryItem key={item.id} item={item} onStarClick={starItem}/>
+          {repoList?.map((item: RepositoryType) => (
+            <RepositoryItem key={item.id} item={item} onStarClick={setStarToItem} />
           ))}
         </div>
       </>),
@@ -61,8 +67,8 @@ const App = () => {
       label: 'Starred view',
       children: (
         <div className="repo-list">
-          {starredList?.map((item) => (
-            <RepositoryItem key={item.id} item={item} onStarClick={starItem}/>
+          {starredList?.map((item: RepositoryType) => (
+            <RepositoryItem key={item.id} item={item} onStarClick={setStarToItem} />
           ))}
         </div>
       ),
@@ -84,4 +90,7 @@ const MainWrapper = () => (
   </RecoilRoot>
 );
 
-export default MainWrapper;
+export {
+  App,
+  MainWrapper,
+};

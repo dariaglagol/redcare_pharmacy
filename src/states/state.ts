@@ -1,17 +1,17 @@
 import { atom, selector, selectorFamily } from 'recoil';
-import localStorageManager from '../utils';
+import { localStorageManager } from '../utils';
 import getRepos from '../services';
-import { RepositorytListType, RepositoryType } from '../types';
+import { RepositoryListType, RepositoryType } from '../types';
 import STARRED_REPOSITORIES from '../constants';
 
 const localRepositoryList = localStorageManager.getObject(STARRED_REPOSITORIES);
 
 const repositoriesDataMapper = {
-  get: (data: Omit<RepositoryType[], 'isStarred'>): Required<RepositorytListType> => data.map((item: any) => {
+  get: (data: Omit<RepositoryType[], 'isStarred'>): Required<RepositoryListType> => data.map((item: any) => {
     const {
       name, description, stargazers_count, html_url, id, language,
     } = item;
-    const isRepoStarred = localRepositoryList?.find((el: any) => id === el.id);
+    const isRepoStarred = localRepositoryList?.find((el: RepositoryType) => id === el.id);
     return {
       name,
       description,
@@ -24,12 +24,12 @@ const repositoriesDataMapper = {
   }),
 };
 
-const repositoriesListState = atom<RepositorytListType>({
+const repositoriesListState = atom<RepositoryListType>({
   key: 'repositoriesList',
   default: [],
 });
 
-const repositoriesStarredListState = atom<RepositorytListType | null>({
+const repositoriesStarredListState = atom<RepositoryListType | null>({
   key: 'repositoriesStarredList',
   default: localRepositoryList,
 });

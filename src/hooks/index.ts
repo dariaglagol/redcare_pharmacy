@@ -1,4 +1,3 @@
-import useStarredList from './useStarredRepos.ts';
-import useLanguageSelect from './useLanguageSelect.ts';
+import useStarredList from './useStarredList.ts';
 
-export { useStarredList, useLanguageSelect };
+export default useStarredList;

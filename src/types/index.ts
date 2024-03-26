@@ -4,13 +4,13 @@ type RepositoryType = {
   stargazers_count: number
   url: string
   id: number
-  language: string,
+  language: string | null
   isStarred: boolean
 };
 
-type RepositorytListType = RepositoryType[];
+type RepositoryListType = RepositoryType[];
 
 export type {
   RepositoryType,
-  RepositorytListType,
+  RepositoryListType,
 };

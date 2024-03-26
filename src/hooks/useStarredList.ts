@@ -1,9 +1,9 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { repositoriesListState, repositoriesStarredListState } from '../states/state.ts';
-import localStorageManager from '../utils';
-import { RepositoryType, RepositorytListType } from '../types';
+import { localStorageManager, manageStarredRepoList, replaceItemsInRepositoryList } from '../utils';
 import STARRED_REPOSITORIES from '../constants';
+import { RepositoryType } from '../types';
 
 const useStarredList = () => {
   const setStarredList = useSetRecoilState(repositoriesStarredListState);
@@ -12,22 +12,10 @@ const useStarredList = () => {
   const repoList = useRecoilValue(repositoriesListState);
   const starredList = useRecoilValue(repositoriesStarredListState);
 
-  const manageStarredRepoList = ({ list, prepItem }: { list: RepositorytListType, prepItem: RepositoryType }) => {
-    if (list.some((item: any) => item.id === prepItem.id)) {
-      return list.filter((item: any) => item.id !== prepItem.id);
-    }
-    return [...list, prepItem];
-  };
-
-  const starItem = (repoItem: any) => {
-    const { id, isStarred } = repoItem;
+  const setStarToItem = (repoItem: RepositoryType) => {
+    const { isStarred } = repoItem;
     const prepItem = { ...repoItem, isStarred: !isStarred };
-    const processedRepositoryList: RepositorytListType = repoList.reduce((acc: RepositorytListType, item: RepositoryType) => {
-      if (item.id === id) {
-        return [...acc, { ...prepItem }];
-      }
-      return [...acc, item];
-    }, []);
+    const processedRepositoryList = replaceItemsInRepositoryList({ list: repoList, prepItem });
     setRepoList(processedRepositoryList);
 
     setStarredList((prevState) => (prevState
@@ -35,7 +23,6 @@ const useStarredList = () => {
       : [prepItem]));
   };
 
-  // одно из этих надо убрать
   useEffect(() => {
     if (starredList) {
       localStorageManager.setObject(STARRED_REPOSITORIES, starredList);
@@ -49,7 +36,7 @@ const useStarredList = () => {
     }
   }, []);
 
-  return { starItem };
+  return { setStarToItem };
 };
 
 export default useStarredList;
