@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
+import { act } from 'react-dom/test-utils';
 
 const RecoilObserver = ({ node, onChange }: { node: any, onChange: any }) => {
   const value = useRecoilValue(node);
@@ -41,9 +42,20 @@ const localStorageMock = {
   },
 };
 
+function flushPromisesAndTimers(): Promise<void> {
+  // @ts-ignore
+  return act(
+    () => new Promise((resolve) => {
+      setTimeout(resolve, 100);
+      jest.useFakeTimers();
+    }),
+  );
+}
+
 export {
   RecoilObserver,
   starClickHandler,
   mockFetch,
   localStorageMock,
+  flushPromisesAndTimers,
 };

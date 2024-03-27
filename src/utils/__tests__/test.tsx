@@ -8,19 +8,17 @@ import {
 } from '../index.ts';
 import { localStorageMock } from '../../__mocks__/utils.ts';
 import {
-  itemWithNewId, languageList,
+  repositorySet,
+  languageList,
   localStorageDataMock,
-  repositoriesListWide,
-  repositoriesShrinkData,
-  repositoriesShrinkDataWithoutEntry, starredRepositories,
 } from '../../__mocks__/data.ts';
 import STARRED_REPOSITORIES from '../../constants';
 
+const { newItem, starredItem, shrinkData, shrinkDataWithoutEntry, wideData, starredData } = repositorySet
+
 beforeAll(() => {
-  // @ts-ignore
   Object.defineProperty(window, 'localStorage', { value: localStorageMock });
   Object.keys(localStorageDataMock).forEach((key: string) => {
-    // @ts-ignore
     localStorageManager.setObject(key, localStorageDataMock[key]);
   });
 });
@@ -44,53 +42,44 @@ describe('LocalStorage test set', () => {
 
 describe('manageStarredRepoList test set', () => {
   test('add new item in starred list', () => {
-    const a = manageStarredRepoList({ list: repositoriesShrinkData, prepItem: itemWithNewId });
-    expect(a).toEqual([...repositoriesShrinkData, itemWithNewId]);
+    const a = manageStarredRepoList({ list: shrinkData, prepItem: newItem });
+    expect(a).toEqual([...shrinkData, newItem]);
   });
 
   test('add new item if there is no list before', () => {
-    const a = manageStarredRepoList({ list: [], prepItem: itemWithNewId });
-    expect(a).toEqual([itemWithNewId]);
+    const a = manageStarredRepoList({ list: [], prepItem: newItem });
+    expect(a).toEqual([newItem]);
   });
 
   test('remove item from starredList', () => {
-    const a = manageStarredRepoList({ list: repositoriesShrinkData, prepItem: repositoriesShrinkData[0] });
-    expect(a).toEqual(repositoriesShrinkDataWithoutEntry);
+    const a = manageStarredRepoList({ list: shrinkData, prepItem: shrinkData[0] });
+    expect(a).toEqual(repositorySet.shrinkDataWithoutEntry);
   });
 });
 
 describe('replaceItemsInRepositoryList test set', () => {
   test('if list is empty', () => {
-    const processedRepositories = replaceItemsInRepositoryList({ list: [], prepItem: repositoriesShrinkData[0] });
+    const processedRepositories = replaceItemsInRepositoryList({ list: [], prepItem: shrinkData[0] });
     expect(processedRepositories).toEqual([]);
   });
 
   test('change item with new isStarred parameter', () => {
-    const item = {
-      id: 78483432,
-      name: 'TranslucentTB',
-      url: 'https://github.com/TranslucentTB/TranslucentTB',
-      description: 'A lightweight utility that makes the Windows taskbar translucent/transparent.',
-      stargazers_count: 13996,
-      language: 'C++',
-      isStarred: true,
-    };
-    const processedRepositories = replaceItemsInRepositoryList({ list: repositoriesShrinkData, prepItem: item });
-    expect(processedRepositories).toEqual([item, ...repositoriesShrinkDataWithoutEntry]);
+    const processedRepositories = replaceItemsInRepositoryList({ list: shrinkData, prepItem: starredItem });
+    expect(processedRepositories).toEqual([starredItem, ...shrinkDataWithoutEntry]);
   });
 
   test('array is the same when there is new items', () => {
-    const processedRepositories = replaceItemsInRepositoryList({ list: repositoriesShrinkData, prepItem: itemWithNewId });
-    expect(processedRepositories).toEqual([...repositoriesShrinkData]);
+    const processedRepositories = replaceItemsInRepositoryList({ list: shrinkData, prepItem: newItem });
+    expect(processedRepositories).toEqual([...shrinkData]);
   });
 });
 
 describe('repositoriesDataMapper tests set', () => {
   test('repositoriesDataMapper processed data with empty localstorage', () => {
     localStorageManager.clearValue(STARRED_REPOSITORIES);
-    const processedData = repositoriesDataMapper.get(repositoriesListWide);
+    const processedData = repositoriesDataMapper.get(wideData);
 
-    expect(processedData).toEqual(repositoriesShrinkData);
+    expect(processedData).toEqual(shrinkData);
   });
 
   test('repositoriesDataMapper processed empty list', () => {
@@ -99,15 +88,15 @@ describe('repositoriesDataMapper tests set', () => {
   });
 
   test('repositoriesDataMapper processed data with STARRED_REPOSITORIES property set', () => {
-    localStorageManager.setObject(STARRED_REPOSITORIES, starredRepositories);
-    const processedData = repositoriesDataMapper.get(repositoriesListWide);
-    expect(processedData).toEqual(starredRepositories);
+    localStorageManager.setObject(STARRED_REPOSITORIES, starredData);
+    const processedData = repositoriesDataMapper.get(wideData);
+    expect(processedData).toEqual(starredData);
   });
 });
 
 describe('languageDataMapper tests set', () => {
   test('languageDataMapper return language set', () => {
-    const langList = languageDataMapper.get(repositoriesListWide);
+    const langList = languageDataMapper.get(wideData);
     expect(langList).toEqual(languageList);
   });
   test('languageDataMapper return empty set there is no data', () => {
@@ -115,7 +104,7 @@ describe('languageDataMapper tests set', () => {
     expect(langList).toEqual(new Set());
   });
   test('languageDataMapper return only unique languages', () => {
-    const langList = languageDataMapper.get([...repositoriesListWide, itemWithNewId]);
+    const langList = languageDataMapper.get([...wideData, newItem]);
     expect(langList).toEqual(languageList);
   });
 });

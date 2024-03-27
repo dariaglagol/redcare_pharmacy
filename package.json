@@ -2,11 +2,11 @@
   "name": "redcare_pharmacy",
   "version": "1.0.0",
   "description": "home task for Redcare Pharmacy",
-  "main": "index.ts",
+  "main": "main.tsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "jest"
+    "tests": "jest"
   },
   "author": "Daria Glagol",
   "license": "ISC",
