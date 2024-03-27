@@ -34,6 +34,7 @@ const repositoriesListQuery = selectorFamily({
 const languageListQuery = selector({
   key: 'languageListQuery',
   get: async ():Promise<Set<string>> => {
+    // potentially should be a separate rest
     const response = await getRepos();
     if (response.error) {
       throw response.error;

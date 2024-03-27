@@ -1,7 +1,7 @@
-import { RepositoryType } from '../types';
+import { RepositoryWideListType, RepositoryWideType } from '../types';
 
 const languageDataMapper = {
-  get: (data: any[]) => data.reduce((acc: Set<string>, { language }: Partial<RepositoryType>) => {
+  get: (data: RepositoryWideListType) => data.reduce((acc: Set<string>, { language }: Partial<RepositoryWideType>) => {
     if (language) {
       acc.add(language);
     }

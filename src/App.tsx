@@ -1,7 +1,6 @@
 import {
-  RecoilRoot,
+  RecoilRoot, useRecoilState,
   useRecoilValue,
-  useSetRecoilState,
 } from 'recoil';
 import React, { useEffect, useState } from 'react';
 import { Tabs, Select } from 'antd';
@@ -14,7 +13,7 @@ import {
   repositoriesListState,
   repositoriesStarredListState,
 } from './states/state.ts';
-import useStarredList from './hooks';
+import useStarredList from './hooks/useStarredList.ts';
 import { RepositoryType } from './types';
 
 const App = () => {
@@ -22,11 +21,10 @@ const App = () => {
   const [langListPrepared, setLangListPrepared] = useState<{ value: string, label: string }[]>([]);
 
   const getRepoList = useRecoilValue(repositoriesListQuery(activeLang));
-  const setRepoList = useSetRecoilState(repositoriesListState);
-  const repoList = useRecoilValue(repositoriesListState);
   const langRepositoriesList = useRecoilValue(languageListQuery);
-
   const starredList = useRecoilValue(repositoriesStarredListState);
+
+  const [repoList, setRepoList] = useRecoilState(repositoriesListState);
 
   const { setStarToItem } = useStarredList();
 

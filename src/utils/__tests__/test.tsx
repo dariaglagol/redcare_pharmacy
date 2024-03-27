@@ -14,7 +14,9 @@ import {
 } from '../../__mocks__/data.ts';
 import STARRED_REPOSITORIES from '../../constants';
 
-const { newItem, starredItem, shrinkData, shrinkDataWithoutEntry, wideData, starredData } = repositorySet
+const {
+  newItem, starredItem, shrinkData, shrinkDataWithoutEntry, wideData, starredData,
+} = repositorySet;
 
 beforeAll(() => {
   Object.defineProperty(window, 'localStorage', { value: localStorageMock });

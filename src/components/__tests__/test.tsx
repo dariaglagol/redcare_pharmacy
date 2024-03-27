@@ -6,7 +6,7 @@ import RepositoryItem from '../RepositoryItem.tsx';
 import { repositorySet } from '../../__mocks__/data.ts';
 import { starClickHandler } from '../../__mocks__/utils.ts';
 
-const {defaultItem} = repositorySet
+const { defaultItem } = repositorySet;
 
 describe('Repository item tests set', () => {
   beforeEach(() => {

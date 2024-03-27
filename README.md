@@ -2,7 +2,9 @@
 
 This is a React-based application for Redcare pharmacy.
 
-Project build with [Vite](https://vitejs.dev/) as builder and [Recoil](https://recoiljs.org) as a state manager
+Project build with [Vite](https://vitejs.dev/) as builder and [Recoil](https://recoiljs.org) as a state manager.
+
+For UI building, I chose [antd](https://ant.design/) library. 
 
 ## Installation
 
@@ -17,6 +19,7 @@ Required node version is **20+**
 ## Running project
 
 Run `npm run dev` in your terminal. Local address will be in terminal.
+Keep in mind, that linter is running at the same time with dev build.
 
 ## Run tests
 

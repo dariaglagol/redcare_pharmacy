@@ -1,7 +1,7 @@
 import STARRED_REPOSITORIES from '../constants';
-import {RepositoryType} from '../types';
+import { RepositoryType } from '../types';
 
-const repositorySet: {[index: string]: any} = {
+const repositorySet: { [index: string]: any } = {
   wideData: [
     {
       id: 78483432,
@@ -679,8 +679,8 @@ const repositorySet: {[index: string]: any} = {
     stargazers_count: 6699,
     isStarred: false,
     language: 'Java',
-  }
-}
+  },
+};
 
 repositorySet.starredData = repositorySet.shrinkData.map((repo: RepositoryType) => ({ ...repo, isStarred: true }));
 
@@ -697,7 +697,7 @@ enum FETCH_STATUS {
   reject = 'reject',
 }
 
-const localStorageDataMock: {[index: string]: any} = {
+const localStorageDataMock: { [index: string]: any } = {
   [STARRED_REPOSITORIES]: repositorySet.starredData,
   secondEntry: [{ key: 56, id: 454 }],
   thirdEntry: [{ key: 12, id: 8765 }],

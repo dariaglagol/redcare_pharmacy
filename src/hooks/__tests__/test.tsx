@@ -5,7 +5,9 @@ import { repositorySet } from '../../__mocks__/data.ts';
 import { repositoriesListState, repositoriesStarredListState } from '../../states/state.ts';
 import useStarredList from '../useStarredList.ts';
 
-const {defaultItem, starredItem, shrinkData, shrinkDataWithoutEntry} = repositorySet
+const {
+  defaultItem, starredItem, shrinkData, shrinkDataWithoutEntry,
+} = repositorySet;
 
 test('Test useStarredList', async () => {
   const wrapper = ({ children }: any) => <RecoilRoot>{children}</RecoilRoot>;
