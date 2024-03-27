@@ -34,13 +34,12 @@ const replaceItemsInRepositoryList = ({
   return [...acc, item];
 }, []);
 
-const localRepositoryList = localStorageManager.getObject(STARRED_REPOSITORIES);
-
 const repositoriesDataMapper = {
-  get: (data: Omit<RepositoryType[], 'isStarred'>): Required<RepositoryListType> => data.map((item: any) => {
+  get: (data: any[]): Required<RepositoryListType> => data.map((item: any) => {
     const {
       name, description, stargazers_count, html_url, id, language,
     } = item;
+    const localRepositoryList = localStorageManager.getObject(STARRED_REPOSITORIES);
     const isRepoStarred = localRepositoryList?.find((el: RepositoryType) => id === el.id);
     return {
       name,
@@ -55,7 +54,7 @@ const repositoriesDataMapper = {
 };
 
 const languageDataMapper = {
-  get: (data: Omit<RepositoryType[], 'isStarred'>) => data.reduce((acc: Set<string>, { language }: Partial<RepositoryType>) => {
+  get: (data: any[]) => data.reduce((acc: Set<string>, { language }: Partial<RepositoryType>) => {
     if (language) {
       acc.add(language);
     }

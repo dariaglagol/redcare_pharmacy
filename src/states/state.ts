@@ -39,12 +39,6 @@ const languageListQuery = selector({
       throw response.error;
     }
     return languageDataMapper.get(response.items);
-    // return response.items.reduce((acc: Set<string>, { language }: { language: string }) => {
-    //   if (language) {
-    //     acc.add(language);
-    //   }
-    //   return acc;
-    // }, new Set());
   },
 });
 

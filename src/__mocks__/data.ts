@@ -1,3 +1,5 @@
+import STARRED_REPOSITORIES from '../constants';
+
 const item = {
   id: 78483432,
   name: 'TranslucentTB',
@@ -16,6 +18,15 @@ const repositoriesShrinkData = [
     description: 'A lightweight utility that makes the Windows taskbar translucent/transparent.',
     stargazers_count: 13996,
     language: 'C++',
+    isStarred: false,
+  },
+  {
+    id: 78544867,
+    name: 'awesome-github-wechat-weapp',
+    url: 'https://github.com/opendigg/awesome-github-wechat-weapp',
+    description: '微信小程序开源项目库汇总',
+    stargazers_count: 8679,
+    language: null,
     isStarred: false,
   },
   {
@@ -49,6 +60,15 @@ const repositoriesShrinkData = [
 
 const repositoriesShrinkDataWithoutEntry = [
   {
+    id: 78544867,
+    name: 'awesome-github-wechat-weapp',
+    url: 'https://github.com/opendigg/awesome-github-wechat-weapp',
+    description: '微信小程序开源项目库汇总',
+    stargazers_count: 8679,
+    language: null,
+    isStarred: false,
+  },
+  {
     id: 78494737,
     name: 'walle',
     url: 'https://github.com/Meituan-Dianping/walle',
@@ -76,6 +96,8 @@ const repositoriesShrinkDataWithoutEntry = [
     stargazers_count: 4961,
   },
 ];
+
+const starredRepositories = repositoriesShrinkData.map((repo) => ({ ...repo, isStarred: true }));
 
 const repositoriesListWide = [
   {
@@ -643,11 +665,15 @@ const repositoriesListWide = [
     score: 1,
   },
 ];
+
 const mockedLanguage = 'HTML';
+
 const mockedUrls = {
   withoutLang: 'https://api.github.com/search/repositories?q=created:2017-01-10&sort=stars&order=desc',
   withLang: `https://api.github.com/search/repositories?q=created:2017-01-10+language:${mockedLanguage}&sort=stars&order=desc`,
 };
+
+const languageList = new Set(['C++', 'Java', 'TypeScript', 'JavaScript']);
 
 const itemWithNewId = {
   id: 7849477,
@@ -665,7 +691,7 @@ enum FETCH_STATUS {
 }
 
 const localStorageDataMock = {
-  firstEntry: repositoriesShrinkData,
+  [STARRED_REPOSITORIES]: starredRepositories,
   secondEntry: [{ key: 56, id: 454 }],
   thirdEntry: [{ key: 12, id: 8765 }],
 };
@@ -680,4 +706,6 @@ export {
   itemWithNewId,
   localStorageDataMock,
   repositoriesShrinkDataWithoutEntry,
+  starredRepositories,
+  languageList,
 };

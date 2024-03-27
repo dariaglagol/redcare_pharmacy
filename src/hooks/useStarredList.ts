@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { repositoriesListState, repositoriesStarredListState } from '../states/state.ts';
 import { localStorageManager, manageStarredRepoList, replaceItemsInRepositoryList } from '../utils';
@@ -6,11 +6,8 @@ import STARRED_REPOSITORIES from '../constants';
 import { RepositoryType } from '../types';
 
 const useStarredList = () => {
-  const setStarredList = useSetRecoilState(repositoriesStarredListState);
-  const setRepoList = useSetRecoilState(repositoriesListState);
-
-  const repoList = useRecoilValue(repositoriesListState);
-  const starredList = useRecoilValue(repositoriesStarredListState);
+  const [repoList, setRepoList] = useRecoilState(repositoriesListState);
+  const [starredList, setStarredList] = useRecoilState(repositoriesStarredListState);
 
   const setStarToItem = (repoItem: RepositoryType) => {
     const { isStarred } = repoItem;
