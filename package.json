@@ -42,5 +42,8 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "4.2.0"
+  },
+  "engines" : {
+    "node" : ">=20.0.0"
   }
 }

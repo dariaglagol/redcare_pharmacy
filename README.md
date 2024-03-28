@@ -11,7 +11,7 @@ For UI building, I chose [antd](https://ant.design/) library.
 Use the package manager [npm](https://www.npmjs.com/) to install foobar.
 
 ```bash
-npm i
+npm ci
 ```
 
 Required node version is **20+**
